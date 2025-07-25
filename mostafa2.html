@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional CV</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            transition: all 0.3s ease;
+        }
+
+        [dir="rtl"] {
+            font-family: 'Arial', 'Tahoma', sans-serif;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .cv-card  {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cv-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2, #f093fb);
+            animation: shimmer 3s ease-in-out infinite;
+        }
+
+        @keyframes shimmer {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .lang-toggle {
+            position: absolute;
+            top: 0;
+            right: 0;
+            display: flex;
+            gap: 10px;
+        }
+
+        [dir="rtl"] .lang-toggle {
+            right: auto;
+            left: 0;
+        }
+
+        .lang-btn {
+            padding: 8px 16px;
+            border: 2px solid #667eea;
+            background: transparent;
+            color: #667eea;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+        .lang-btn.active {
+            background: #667eea;
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .lang-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 60px;
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .profile-img:hover {
+            transform: scale(1.05) rotate(5deg);
+        }
+
+        .name {
+            font-size: 2.5em;
+            font-weight: 700;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .title {
+            font-size: 1.3em;
+            color: #666;
+            margin-bottom: 20px;
+            font-weight: 300;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #555;
+            font-size: 14px;
+            padding: 8px 16px;
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .contact-item:hover {
+            background: rgba(102, 126, 234, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .section {
+            background: rgba(255, 255, 255, 0.7);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+        }
+
+        .section:hover {
+            transform: translateY(-5px);
+        }
+
+        .section-title {
+            font-size: 1.5em;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #667eea;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            border-radius: 2px;
+        }
+
+        [dir="rtl"] .section-title::after {
+            left: auto;
+            right: 0;
+        }
+
+        .experience-item, .education-item {
+            margin-bottom: 25px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+            transition: all 0.3s ease;
+        }
+
+        [dir="rtl"] .experience-item,
+        [dir="rtl"] .education-item {
+            border-left: none;
+            border-right: 4px solid #667eea;
+        }
+
+        .experience-item:hover,
+        .education-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        [dir="rtl"] .experience-item:hover,
+        [dir="rtl"] .education-item:hover {
+            transform: translateX(-5px);
+        }
+
+        .job-title, .degree {
+            font-weight: 700;
+            color: #333;
+            font-size: 1.1em;
+            margin-bottom: 5px;
+        }
+
+        .company, .school {
+            color: #667eea;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .date {
+            color: #888;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+
+        .skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .skill {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .skill:hover {
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .language-content {
+            display: none;
+        }
+
+        .language-content.active {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            .cv-card {
+                padding: 20px;
+            }
+
+            .content {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .contact-info {
+                flex-direction: column;
+                align-items: center;
+                gap: 15px;
+            }
+
+            .name {
+                font-size: 2em;
+            }
+
+            .lang-toggle {
+                position: static;
+                justify-content: center;
+                margin-bottom: 20px;
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="cv-card">
+            <div class="header">
+                <div class="lang-toggle">
+                    <button class="lang-btn active" onclick="switchLanguage('en')">English</button>
+                    <button class="lang-btn" onclick="switchLanguage('ar')">العربية</button>
+                </div>
+
+                <!-- English Content -->
+                <div class="language-content active" id="en-content">
+                    <div class="profile-img">JD</div>
+                    <h1 class="name">John Doe</h1>
+                    <p class="title">Full Stack Developer</p>
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <span>📧</span>
+                            <span>john.doe@email.com</span>
+                        </div>
+                        <div class="contact-item">
+                            <span>📱</span>
+                            <span>+20 123 456 7890</span>
+                        </div>
+                        <div class="contact-item">
+                            <span>📍</span>
+                            <span>Cairo, Egypt</span>
+                        </div>
+                        <div class="contact-item">
+                            <span>💼</span>
+                            <span>linkedin.com/in/johndoe</span>
+                        </div>
+                    </div>
+
+                    <div class="content">
+                        <div class="section">
+                            <h2 class="section-title">Experience</h2>
+                            <div class="experience-item">
+                                <div class="job-title">Senior Full Stack Developer</div>
+                                <div class="company">Tech Solutions Inc.</div>
+                                <div class="date">2022 - Present</div>
+                                <p>Leading development of web applications using React, Node.js, and MongoDB. Mentoring junior developers and implementing best practices.</p>
+                            </div>
+                            <div class="experience-item">
+                                <div class="job-title">Frontend Developer</div>
+                                <div class="company">Digital Agency</div>
+                                <div class="date">2020 - 2022</div>
+                                <p>Developed responsive websites and web applications using modern JavaScript frameworks and CSS preprocessors.</p>
+                            </div>
+                        </div>
+
+                        <div class="section">
+                            <h2 class="section-title">Education</h2>
+                            <div class="education-item">
+                                <div class="degree">Bachelor of Computer Science</div>
+                                <div class="school">Cairo University</div>
+                                <div class="date">2016 - 2020</div>
+                                <p>Graduated with honors, specializing in software engineering and web development.</p>
+                            </div>
+                        </div>
+
+                        <div class="section">
+                            <h2 class="section-title">Skills</h2>
+                            <div class="skills">
+                                <span class="skill">JavaScript</span>
+                                <span class="skill">React</span>
+                                <span class="skill">Node.js</span>
+                                <span class="skill">Python</span>
+                                <span class="skill">MongoDB</span>
+                                <span class="skill">CSS</span>
+                                <span class="skill">HTML</span>
+                                <span class="skill">Git</span>
+                            </div>
+                        </div>
+
+                        <div class="section">
+                            <h2 class="section-title">Languages</h2>
+                            <div class="skills">
+                                <span class="skill">Arabic (Native)</span>
+                                <span class="skill">English (Fluent)</span>
+                                <span class="skill">French (Intermediate)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Arabic Content -->
+                <div class="language-content" id="ar-content">
+                    <div class="profile-img">أ م</div>
+                    <h1 class="name">أحمد محمد</h1>
+                    <p class="title">مطور ويب متكامل</p>
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <span>📧</span>
+                            <span>ahmed.mohamed@email.com</span>
+                        </div>
+                        <div class="contact-item">
+                            <span>📱</span>
+                            <span>+20 123 456 7890</span>
+                        </div>
+                        <div class="contact-item">
+                            <span>📍</span>
+                            <span>القاهرة، مصر</span>
+                        </div>
+                        <div class="contact-item">
+                            <span>💼</span>
+                            <span>linkedin.com/in/ahmedmohamed</span>
+                        </div>
+                    </div>
+
+                    <div class="content">
+                        <div class="section">
+                            <h2 class="section-title">الخبرة العملية</h2>
+                            <div class="experience-item">
+                                <div class="job-title">مطور ويب متكامل أول</div>
+                                <div class="company">شركة التقنيات المتقدمة</div>
+                                <div class="date">2022 - حتى الآن</div>
+                                <p>قيادة تطوير تطبيقات الويب باستخدام React و Node.js و MongoDB. توجيه المطورين المبتدئين وتطبيق أفضل الممارسات.</p>
+                            </div>
+                            <div class="experience-item">
+                                <div class="job-title">مطور واجهات أمامية</div>
+                                <div class="company">وكالة رقمية</div>
+                                <div class="date">2020 - 2022</div>
+                                <p>تطوير مواقع ويب متجاوبة وتطبيقات ويب باستخدام أحدث أطر عمل JavaScript ومعالجات CSS.</p>
+                            </div>
+                        </div>
+
+                        <div class="section">
+                            <h2 class="section-title">التعليم</h2>
+                            <div class="education-item">
+                                <div class="degree">بكالوريوس علوم الحاسب</div>
+                                <div class="school">جامعة القاهرة</div>
+                                <div class="date">2016 - 2020</div>
+                                <p>تخرج بمرتبة الشرف، متخصص في هندسة البرمجيات وتطوير الويب.</p>
+                            </div>
+                        </div>
+
+                        <div class="section">
+                            <h2 class="section-title">المهارات</h2>
+                            <div class="skills">
+                                <span class="skill">JavaScript</span>
+                                <span class="skill">React</span>
+                                <span class="skill">Node.js</span>
+                                <span class="skill">Python</span>
+                                <span class="skill">MongoDB</span>
+                                <span class="skill">CSS</span>
+                                <span class="skill">HTML</span>
+                                <span class="skill">Git</span>
+                            </div>
+                        </div>
+
+                        <div class="section">
+                            <h2 class="section-title">اللغات</h2>
+                            <div class="skills">
+                                <span class="skill">العربية (لغة أم)</span>
+                                <span class="skill">الإنجليزية (طلاقة)</span>
+                                <span class="skill">الفرنسية (متوسط)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function switchLanguage(lang) {
+            // Update active button
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            // Hide all content
+            document.querySelectorAll('.language-content').forEach(content => {
+                content.classList.remove('active');
+            });
+
+            // Show selected language content
+            const selectedContent = document.getElementById(lang + '-content');
+            selectedContent.classList.add('active');
+            selectedContent.classList.add('fade-in');
+
+            // Update HTML attributes for RTL/LTR
+            if (lang === 'ar') {
+                document.documentElement.setAttribute('dir', 'rtl');
+                document.documentElement.setAttribute('lang', 'ar');
+            } else {
+                document.documentElement.setAttribute('dir', 'ltr');
+                document.documentElement.setAttribute('lang', 'en');
+            }
+
+            // Remove fade-in class after animation
+            setTimeout(() => {
+                selectedContent.classList.remove('fade-in');
+            }, 500);
+        }
+
+        // Add hover effects and animations on load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animate sections on scroll
+            const sections = document.querySelectorAll('.section');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animation = 'fadeIn 0.6s ease-in-out';
+                    }
+                });
+            });
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+        });
+    </script>
+</body>
+</html>
